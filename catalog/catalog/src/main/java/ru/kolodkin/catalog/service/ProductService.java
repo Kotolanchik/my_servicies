@@ -4,12 +4,18 @@ import org.springframework.stereotype.Service;
 import ru.kolodkin.catalog.domain.Product;
 import ru.kolodkin.catalog.repository.ProductRepository;
 
+import java.util.List;
+
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    public List<Product> getProducts(){
+        return productRepository.findAll();
     }
 
     public Product getProduct(final long productId) {
