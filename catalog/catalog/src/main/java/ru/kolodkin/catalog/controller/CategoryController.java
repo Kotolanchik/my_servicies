@@ -1,20 +1,19 @@
 package ru.kolodkin.catalog.controller;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.kolodkin.catalog.domain.Category;
-import ru.kolodkin.catalog.domain.Product;
+import ru.kolodkin.catalog.dto.CategoryDTO;
 import ru.kolodkin.catalog.service.CategoryService;
 import ru.kolodkin.catalog.service.ProductService;
+
+import java.util.List;
 
 import static lombok.AccessLevel.PRIVATE;
 
 @RestController
+@ResponseBody
 @FieldDefaults(level = PRIVATE)
 public class CategoryController {
     final ProductService productService;
@@ -25,13 +24,19 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/pr/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable("id") final long id) {
-        return ResponseEntity.ok(productService.getProduct(id));
+    @GetMapping("/all")
+    public ResponseEntity<List<Category>> getCategories() {
+        return ResponseEntity.ok(categoryService.getCategories());
+    }
+
+    @GetMapping("/category/{id}")
+    public ResponseEntity<Category> getCategories(@PathVariable("id") final long id) {
+        return ResponseEntity.ok(categoryService.getCategory(id));
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Category> getProduct(@RequestBody final Category category) {
+    public ResponseEntity<Category> saveCategory(@RequestBody final CategoryDTO category) {
+        System.out.println("category = " + category);
         return ResponseEntity.ok(categoryService.saveCategory(category));
     }
 }

@@ -1,5 +1,6 @@
 package ru.kolodkin.catalog.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -24,19 +25,11 @@ public class Product {
     String description;
     @Column(name = "price")
     BigDecimal price;
-
     @Column(name = "amount")
     Long amount;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "product_category_fk"))
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
     Category category;
-
-    public void incrementAmount(long value) {
-        amount = amount == null ? value : amount + value;
-    }
-
-    public enum ProductState {
-        AVAILABLE,
-        UNAVAILABLE
-    }
 }

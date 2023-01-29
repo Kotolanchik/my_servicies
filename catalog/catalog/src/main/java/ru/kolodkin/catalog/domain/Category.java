@@ -21,9 +21,4 @@ public class Category {
     Long id;
     @Column(name = "name", nullable = false)
     String name;
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
-    Category parent;
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-    Set<Category> children;
 }
