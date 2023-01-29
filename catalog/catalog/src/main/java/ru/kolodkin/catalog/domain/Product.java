@@ -16,8 +16,7 @@ import java.util.Set;
 @Table(name = "product")
 public class Product {
     @Id
-    @SequenceGenerator(name = "product_id_sequence", sequenceName = "product_id_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @Column(name = "name")
     String name;
@@ -25,11 +24,9 @@ public class Product {
     String description;
     @Column(name = "price")
     BigDecimal price;
+
     @Column(name = "amount")
     Long amount;
-    @Column(name = "state")
-    @Enumerated(EnumType.STRING)
-    ProductState state;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "product_category_fk"))
     Category category;

@@ -17,13 +17,13 @@ import java.util.Set;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "category_id", nullable = false)
     Long id;
     @Column(name = "name", nullable = false)
     String name;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "category_parent_fk"))
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
     Category parent;
-    @OneToMany(mappedBy = "parent")
-    List<Category> children;
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    Set<Category> children;
 }
